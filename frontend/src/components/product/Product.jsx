@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import Card from './Card';
 import { useNavigate } from 'react-router-dom';
 
-export const api = 'http://localhost/ecommerce/backend/';
+// export const api = 'http://localhost/ecommerce/backend/';
+export const api = 'https://saj-commerce.000webhostapp.com/backend/';
 
 const Product = () => {
   const [productData, setProducts] = useState([]);
@@ -12,7 +12,9 @@ const Product = () => {
 
   // get products
   const getData = async () => {
-    const { data } = await axios.get(`${api}products.php`);
+    const response = await fetch(api + 'products.php');
+    const data = await response.json();
+
     setProducts(data);
   };
 
@@ -36,17 +38,26 @@ const Product = () => {
       return false;
     }
 
-    const SKUs = selectedProducts.map((product) => product.SKU);
+    let SKUs = [];
+    for (let product of selectedProducts) {
+      SKUs.push(product.SKU);
+    }
 
-    const SKUsJson = { SKUs };
+    let SKUsJson = { SKUs: SKUs };
 
-    await axios.delete(`${api}delete.php`, {
-      data: SKUsJson,
-    });
+    let raw = JSON.stringify(SKUsJson);
+    let requestOptions = {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+      },
+      body: raw,
+    };
+
+    await fetch(api + 'delete.php', requestOptions);
 
     getData();
   };
-
   return (
     <div className="home">
       <nav className="nav">
@@ -54,8 +65,8 @@ const Product = () => {
           <h2>Product List</h2>
         </div>
         <ul>
-          <li onClick={() => navigate('/add')}>Add</li>
-          <li onClick={() => deleteSelectedProducts()}>Mass delete</li>
+          <button onClick={() => navigate('/add')}>ADD</button>
+          <button onClick={() => deleteSelectedProducts()}>MASS DELETE</button>
         </ul>
       </nav>
       <div className="products">

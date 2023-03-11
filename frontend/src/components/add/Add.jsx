@@ -1,8 +1,8 @@
-import axios from 'axios';
 import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export const api = 'http://localhost/ecommerce/backend/';
+// export const api = 'http://localhost/ecommerce/backend/';
+export const api = 'https://saj-commerce.000webhostapp.com/backend/';
 
 const Add = () => {
   let heightRef = useRef(null);
@@ -26,13 +26,24 @@ const Add = () => {
 
   const Submit = async () => {
     if (validateForm()) {
-      try {
-        const { data } = await axios.post(`${api}create.php`, formData);
-        if (data['message']) {
-          navigate('/');
-        }
-      } catch {
-        setError('sku is already present in the database');
+      let raw = JSON.stringify(formData);
+      let requestOptions = {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+        },
+        body: raw,
+      };
+
+      const response = await fetch(api + 'create.php', requestOptions);
+      const data = await response.json();
+      console.log(data.error);
+      if (data.error === 'SKU already exists') {
+        setError(data.error);
+        return;
+      }
+      if (data['message']) {
+        navigate('/');
       }
     }
   };
