@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const Card = ({ item }) => {
+const Card = ({ item, toggleProduct }) => {
+  const [checked, setChecked] = useState(false);
+  const handleChange = () => {
+    setChecked(!checked);
+    toggleProduct(item);
+  };
   const productTypeFormatters = {
     DVD: (value) => `Size ${value} MB`,
     Book: (value) => `Weight: ${value} KG`,
@@ -10,7 +15,12 @@ const Card = ({ item }) => {
 
   return (
     <div className="card">
-      <input type="checkbox" className="delete-checkbox"></input>
+      <input
+        type="checkbox"
+        className="delete-checkbox"
+        checked={checked}
+        onChange={handleChange}
+      ></input>
       <p>{item.SKU}</p>
       <p>{item.Name}</p>
       <p>{item.Price}$</p>

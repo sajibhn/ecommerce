@@ -22,4 +22,18 @@ class ProductController extends Controller
             $this->echoJsonResponse($e);
         }
     }
+
+        function Delete()
+    {
+        try {
+
+            $data = $this->getJsonBody();
+            $SKUsArray = $data->SKUs;
+            $result = Product::DeleteProducts($SKUsArray);
+            $this->echoJsonResponse($result);
+        } catch (Exception $e) {
+
+            $this->echoJsonResponse($e);
+        }
+    }
 }

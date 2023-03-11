@@ -16,6 +16,7 @@
 
     static abstract function GetType();
 
+    // get products
     public static function GetProducts(){
         $database = new Database();
         $conn = $database->connect();
@@ -46,6 +47,32 @@
         }else{
             return array();
         };
+
+    }
+     // delete products
+     public static function DeleteProducts($SKUsArray){
+        
+        $database = new Database();
+        $conn = $database->connect();
+
+        $SKUs = implode(',', array_fill(0, count($SKUsArray), '?'));
+
+        // Create query
+        $query = 'DELETE FROM ecommerce' . ' WHERE SKU IN(' . $SKUs . ')';
+
+        // Prepare statement
+        $statement = $conn->prepare($query);
+
+        foreach ($SKUsArray as $k => $SKU)
+            $statement->bindValue(($k+1), $SKU)
+        ;
+
+        // Execute query
+        if($statement->execute()) {
+          return array('message' => 'Products Deleted');
+        }
+
+        return array('message' => 'Products Not Deleted');
 
     }
 }

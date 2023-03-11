@@ -13,4 +13,5 @@ abstract class Controller
   }
 
   abstract function Get();
+    abstract function Delete();
 }
