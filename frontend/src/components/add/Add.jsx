@@ -26,9 +26,13 @@ const Add = () => {
 
   const Submit = async () => {
     if (validateForm()) {
-      const { data } = await axios.post(`${api}create.php`, formData);
-      if (data['message']) {
-        navigate('/');
+      try {
+        const { data } = await axios.post(`${api}create.php`, formData);
+        if (data['message']) {
+          navigate('/');
+        }
+      } catch {
+        setError('sku is already present in the database');
       }
     }
   };
