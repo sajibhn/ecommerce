@@ -16,7 +16,8 @@
   gap: 1rem;
 }
 
-.nav ul li {
+.nav ul li,
+button {
   background-color: #ffffff;
   border: 1px solid #222222;
   border-radius: 8px;
@@ -54,4 +55,30 @@
   top: 1rem;
   left: 1rem;
   cursor: pointer;
+}
+
+/* add product */
+
+.add__item {
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  width: 60%;
+  margin: 2rem auto;
+  padding: 2rem;
+}
+
+#product_form {
+  display: grid;
+  gap: 1rem;
+}
+
+.form__control {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.form__control input,
+select {
+  width: 100%;
+  flex: 1;
 }

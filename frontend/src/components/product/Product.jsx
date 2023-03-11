@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Card from './Card';
+import { useNavigate } from 'react-router-dom';
 
 export const api = 'http://localhost/ecommerce/backend/';
 
 const Product = () => {
   const [productData, setProducts] = useState([]);
   const [selectedProducts, setSelectedProducts] = useState([]);
+  const navigate = useNavigate();
 
   // get products
   const getData = async () => {
@@ -52,7 +54,7 @@ const Product = () => {
           <h2>Product List</h2>
         </div>
         <ul>
-          <li>Add</li>
+          <li onClick={() => navigate('/add')}>Add</li>
           <li onClick={() => deleteSelectedProducts()}>Mass delete</li>
         </ul>
       </nav>

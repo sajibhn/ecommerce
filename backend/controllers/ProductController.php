@@ -11,8 +11,7 @@ class ProductController extends Controller
 {
    
 
-    function Get()
-    {
+    function Get(){
         try {
             $data = $this->getJsonBody();
             $result = Product::GetProducts();
@@ -23,8 +22,21 @@ class ProductController extends Controller
         }
     }
 
-        function Delete()
-    {
+       function Create(){
+        try {
+
+            $data = $this->getJsonBody();
+            $productFact = new ProductFactory();
+            $product = $productFact->create($data->Type, $data);
+            $result = $product->CreateProduct();
+            $this->echoJsonResponse($result);
+        } catch (Exception $e) {
+
+            $this->echoJsonResponse($e);
+        }
+    }
+
+        function Delete(){
         try {
 
             $data = $this->getJsonBody();

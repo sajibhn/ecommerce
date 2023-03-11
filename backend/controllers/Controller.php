@@ -12,6 +12,7 @@ abstract class Controller
     echo json_encode($data);
   }
 
+  abstract function Create();
   abstract function Get();
-    abstract function Delete();
+  abstract function Delete();
 }
