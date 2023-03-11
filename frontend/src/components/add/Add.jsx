@@ -215,7 +215,7 @@ const Add = () => {
         </ul>
       </nav>
       <div className="add__item">
-        <form id="product__form" ref={formRef}>
+        <form id="product_form" className="product__form" ref={formRef}>
           <div className="form__control">
             <label htmlFor="SKU">SKU: </label>
             <input
