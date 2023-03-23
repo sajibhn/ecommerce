@@ -1,8 +1,8 @@
 import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-// export const api = 'http://localhost/ecommerce/backend/';
-export const api = 'https://saj-commerce.000webhostapp.com/backend/';
+export const api = 'http://localhost/ecommerce/backend/index.php';
+// export const api = 'https://saj-commerce.000webhostapp.com/backend/index.php';
 
 const Add = () => {
   let heightRef = useRef(null);
@@ -35,9 +35,8 @@ const Add = () => {
         body: raw,
       };
 
-      const response = await fetch(api + 'create.php', requestOptions);
+      const response = await fetch(api, requestOptions);
       const data = await response.json();
-      console.log(data.error);
       if (data.error === 'SKU already exists') {
         setError(data.error);
         return;

@@ -9,43 +9,39 @@ include_once './models/Furniture.php';
 
 class ProductController extends Controller
 {
-   
-
-    function Get(){
+    public function Get()
+    {
         try {
             $data = $this->getJsonBody();
             $result = Product::GetProducts();
             $this->echoJsonResponse($result);
         } catch (Exception $e) {
-
             $this->echoJsonResponse($e);
         }
     }
 
-       function Create(){
-        try {
+       public function Create()
+       {
+           try {
+               $data = $this->getJsonBody();
+               $productFact = new ProductFactory();
+               $product = $productFact->create($data->Type, $data);
+               $result = $product->CreateProduct();
+               $this->echoJsonResponse($result);
+           } catch (Exception $e) {
+               $this->echoJsonResponse($e);
+           }
+       }
 
-            $data = $this->getJsonBody();
-            $productFact = new ProductFactory();
-            $product = $productFact->create($data->Type, $data);
-            $result = $product->CreateProduct();
-            $this->echoJsonResponse($result);
-        } catch (Exception $e) {
-
-            $this->echoJsonResponse($e);
+        public function Delete()
+        {
+            try {
+                $data = $this->getJsonBody();
+                $SKUsArray = $data->SKUs;
+                $result = Product::DeleteProducts($SKUsArray);
+                $this->echoJsonResponse($result);
+            } catch (Exception $e) {
+                $this->echoJsonResponse($e);
+            }
         }
-    }
-
-        function Delete(){
-        try {
-
-            $data = $this->getJsonBody();
-            $SKUsArray = $data->SKUs;
-            $result = Product::DeleteProducts($SKUsArray);
-            $this->echoJsonResponse($result);
-        } catch (Exception $e) {
-
-            $this->echoJsonResponse($e);
-        }
-    }
 }

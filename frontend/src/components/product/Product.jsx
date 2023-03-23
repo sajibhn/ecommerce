@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import Card from './Card';
 import { useNavigate } from 'react-router-dom';
 
-// export const api = 'http://localhost/ecommerce/backend/';
-export const api = 'https://saj-commerce.000webhostapp.com/backend/';
+export const api = 'http://localhost/ecommerce/backend/index.php';
+// export const api = 'https://saj-commerce.000webhostapp.com/backend/index.php';
 
 const Product = () => {
   const [productData, setProducts] = useState([]);
@@ -12,7 +12,7 @@ const Product = () => {
 
   // get products
   const getData = async () => {
-    const response = await fetch(api + 'products.php');
+    const response = await fetch(api);
     const data = await response.json();
 
     setProducts(data);
@@ -50,12 +50,13 @@ const Product = () => {
       method: 'POST',
       headers: {
         Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'X-HTTP-Method-Override': 'DELETE',
       },
       body: raw,
     };
 
-    await fetch(api + 'delete.php', requestOptions);
-
+    await fetch(api, requestOptions);
     getData();
   };
   return (
